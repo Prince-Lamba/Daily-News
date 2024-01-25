@@ -1,25 +1,53 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/header';
+import React, { Component } from 'react';
+import Main from './components/main';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      darkMode: false,
+      type: 'light',
+      color: 'black',
+      bgColor: 'White',
+    };
+    this.toggleMode = this.toggleMode.bind(this);
+  }
+  toggleMode() {
+    if (this.state.type === 'dark') {
+      this.setState({
+        bgColor: 'white',
+        type: 'light',
+        color: 'black',
+        darkMode: false,
+      });
+    } else {
+      this.setState({
+        bgColor: '#2f2b3a',
+        type: 'dark',
+        color: 'white',
+        darkMode: true,
+      });
+    }
+
+    if (this.state.darkMode) {
+      document.body.style.backgroundColor = 'white';
+    } else {
+      document.body.style.backgroundColor = '#2f2b3a';
+    }
+  }
+
+  render() {
+    return (
+      <>
+        <div>
+          <Header styleState={this.state} toggleMode={this.toggleMode} />
+        </div>
+        <div className='container'>
+          <Main styleState={this.state} toggleMode={this.toggleMode} />
+        </div>
+      </>
+    );
+  }
 }
-
-export default App;
